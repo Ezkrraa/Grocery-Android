@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace Grocery_Android
+namespace GroceryAndroid
 {
     public class Program
     {

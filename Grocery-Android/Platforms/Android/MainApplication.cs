@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace Grocery_Android
+namespace GroceryAndroid
 {
     [Application]
     public class MainApplication : MauiApplication

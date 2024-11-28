@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 
-namespace Grocery_Android
+namespace GroceryAndroid
 {
     public static class MauiProgram
     {

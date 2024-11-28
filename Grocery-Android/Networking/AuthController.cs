@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Grocery_Android.Networking
+namespace GroceryAndroid.Networking
 {
     public enum HttpResult
     {
@@ -55,7 +56,7 @@ namespace Grocery_Android.Networking
         /// <returns></returns>
         public async Task<bool> CheckToken()
         {
-            string token = await SecureStorage.GetAsync("jwt_token");
+            string? token = await SecureStorage.GetAsync("jwt_token");
             if (token == null)
                 return false;
             HttpClientHandler handler = new HttpClientHandler();
@@ -64,7 +65,6 @@ namespace Grocery_Android.Networking
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             try
             {
-
                 HttpResponseMessage result = await client.PostAsync(BaseUrl + "/api/auth/check-token", null);
 
                 handler.Dispose();
@@ -75,6 +75,11 @@ namespace Grocery_Android.Networking
             {
                 return false;
             }
+        }
+
+        public async Task<string?> GetToken()
+        {
+            return await SecureStorage.GetAsync("jwt_token");
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace Grocery_Android
+namespace GroceryAndroid
 {
     [Register("AppDelegate")]
     public class AppDelegate : MauiUIApplicationDelegate

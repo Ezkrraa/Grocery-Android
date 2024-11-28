@@ -1,4 +1,4 @@
-﻿namespace Grocery_Android
+﻿namespace GroceryAndroid
 {
     public partial class App : Application
     {

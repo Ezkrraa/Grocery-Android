@@ -1,0 +1,35 @@
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GroceryAndroid.Components.SelectionItem">
+    <HorizontalStackLayout Padding="5" BackgroundColor="White">
+        <Button x:Name="decrementBtn"
+                IsEnabled="{Binding Quantity}"
+                Clicked="decrementBtn_Clicked" 
+                Text="-"
+                Margin="0"
+                WidthRequest="50"
+                HeightRequest="50"
+                FontSize="Large"
+                BackgroundColor="{Binding Quantity}"
+                FontAttributes="Bold"/>
+        <Label x:Name="quantityField" 
+               Text="{Binding Quantity}"
+               VerticalOptions="Center"
+               FontSize="Large"
+               FontAttributes="Bold"
+               MinimumWidthRequest="38"
+               Margin="10,0,10,0"/>
+        <Button x:Name="incrementBtn" 
+                Clicked="incrementBtn_Clicked"
+                IsEnabled="{Binding Quantity}"
+                Text="+"
+                Margin="0"
+                WidthRequest="50"
+                BackgroundColor="{Binding Quantity}"
+                HeightRequest="50"
+                FontSize="Large"
+                FontAttributes="Bold"/>
+        <Label x:Name="itemName" 
+               Text="{Binding Name}" />
+    </HorizontalStackLayout>
+</ContentView>
