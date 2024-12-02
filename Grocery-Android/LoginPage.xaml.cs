@@ -21,6 +21,7 @@ namespace GroceryAndroid
         public async void OnLoginClicked(object sender, EventArgs e)
         {
             LoginBtn.IsEnabled = false;
+#if DEBUG
             if (usernameField.Text == "override" && passwordField.Text == "Password_123?")
             {
                 ShowToast("Welcome aboard, captain!");
@@ -28,6 +29,7 @@ namespace GroceryAndroid
             }
             else
             {
+#endif
                 AuthController auth = new();
                 HttpResult loginResult = await auth.AttemptLogin(
                     usernameField.Text,
@@ -45,8 +47,10 @@ namespace GroceryAndroid
                         ShowToast("Invalid login credentials");
                         break;
                 }
-                LoginBtn.IsEnabled = true;
+#if DEBUG
             }
+#endif
+            LoginBtn.IsEnabled = true;
         }
 
         private void ShowToast(string message)
