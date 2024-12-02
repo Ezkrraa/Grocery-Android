@@ -72,6 +72,12 @@ public partial class Home : ContentPage, INotifyPropertyChanged
             dto.UpdateQuantity();
         }
     }
+
+    protected override bool OnBackButtonPressed()
+    {
+        AuthController.ClearToken();
+        return base.OnBackButtonPressed();
+    }
 }
 
 

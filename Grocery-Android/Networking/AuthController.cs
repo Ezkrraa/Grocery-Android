@@ -20,6 +20,8 @@ namespace GroceryAndroid.Networking
 
     public class AuthController
     {
+        private const string JwtStorageKey = "jwt_token";
+
         const string BaseUrl = "https://192.168.1.111:7020";
         public AuthController() { }
 
@@ -28,6 +30,7 @@ namespace GroceryAndroid.Networking
             HttpClientHandler handler = new HttpClientHandler();
             handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
             HttpClient client = new HttpClient(handler);
+            client.Timeout = TimeSpan.FromSeconds(6);
 
             JsonContent content = JsonContent.Create(new Dictionary<string, string> { { "username", username }, { "password", password } }, new MediaTypeHeaderValue("application/json"));
             try
@@ -35,16 +38,18 @@ namespace GroceryAndroid.Networking
                 string url = BaseUrl + "/api/auth/login";
                 HttpResponseMessage result = await client.PostAsync(url, content);
                 if (result.IsSuccessStatusCode)
-                    await SecureStorage.SetAsync("jwt_token", await result.Content.ReadAsStringAsync());
+                    await SetToken(await result.Content.ReadAsStringAsync());
                 handler.Dispose();
                 client.Dispose();
                 return result.IsSuccessStatusCode ? HttpResult.Success : HttpResult.AuthError;
             }
-#if DEBUG
+            // dns error etc.
             catch (HttpRequestException ex)
-#else
-            catch (HttpRequestException)
-#endif
+            {
+                return HttpResult.ConnectionError;
+            }
+            // timeout
+            catch (OperationCanceledException ex)
             {
                 return HttpResult.ConnectionError;
             }
@@ -56,7 +61,7 @@ namespace GroceryAndroid.Networking
         /// <returns></returns>
         public async Task<bool> CheckToken()
         {
-            string? token = await SecureStorage.GetAsync("jwt_token");
+            string? token = await GetToken();
             if (token == null)
                 return false;
             HttpClientHandler handler = new HttpClientHandler();
@@ -77,9 +82,32 @@ namespace GroceryAndroid.Networking
             }
         }
 
-        public async Task<string?> GetToken()
+        public static async Task<string?> GetToken()
         {
-            return await SecureStorage.GetAsync("jwt_token");
+            try
+            {
+                return await SecureStorage.Default.GetAsync(JwtStorageKey);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public static async Task SetToken(string token)
+        {
+            try
+            {
+                await SecureStorage.Default.SetAsync(JwtStorageKey, token);
+            }
+            catch (Exception ex)
+            {
+                return;
+            }
+        }
+        public static void ClearToken()
+        {
+            SecureStorage.Remove(JwtStorageKey);
         }
     }
 }

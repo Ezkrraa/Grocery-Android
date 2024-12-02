@@ -59,10 +59,9 @@ namespace GroceryAndroid.Networking
         {
             HttpClientHandler handler = new HttpClientHandler();
             handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
-            AuthController authController = new AuthController();
             HttpClient client = new HttpClient(handler);
             client.Timeout = TimeSpan.FromSeconds(10);
-            string? token = await authController.GetToken();
+            string? token = await AuthController.GetToken();
             if (token == null)
                 return null;
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
