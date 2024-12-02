@@ -26,30 +26,27 @@ namespace GroceryAndroid
             {
                 ShowToast("Welcome aboard, captain!");
                 await Navigation.PushAsync(new MakeListPage());
+                LoginBtn.IsEnabled = true;
+                return;
             }
-            else
+#endif
+            AuthController auth = new();
+            HttpResult loginResult = await auth.AttemptLogin(
+                usernameField.Text,
+                passwordField.Text
+            );
+            switch (loginResult)
             {
-#endif
-                AuthController auth = new();
-                HttpResult loginResult = await auth.AttemptLogin(
-                    usernameField.Text,
-                    passwordField.Text
-                );
-                switch (loginResult)
-                {
-                    case HttpResult.Success:
-                        await Navigation.PushAsync(new MakeListPage());
-                        break;
-                    case HttpResult.ConnectionError:
-                        ShowToast("Failed to connect to server");
-                        break;
-                    case HttpResult.AuthError:
-                        ShowToast("Invalid login credentials");
-                        break;
-                }
-#if DEBUG
+                case HttpResult.Success:
+                    await Navigation.PushAsync(new MakeListPage());
+                    break;
+                case HttpResult.ConnectionError:
+                    ShowToast("Failed to connect to server");
+                    break;
+                case HttpResult.AuthError:
+                    ShowToast("Invalid login credentials");
+                    break;
             }
-#endif
             LoginBtn.IsEnabled = true;
         }
 
