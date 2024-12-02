@@ -6,34 +6,33 @@
         <BackButtonBehavior IsVisible="False"
                             IsEnabled="False"/>
     </Shell.BackButtonBehavior>
-    <ScrollView Padding="50,0,50,0">
-        <VerticalStackLayout
+    <VerticalStackLayout
+        Margin="0,130,0,0"
             Padding="30,0"
             Spacing="25">
-            <Label
-                Text="Hello, World!"
-                Style="{StaticResource Headline}"
-                SemanticProperties.HeadingLevel="Level1"/>
 
-            <Label
-                Text="Welcome to &#10;.NET Multi-platform App UI"
+        <Label
+                Text="Login"
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
                 SemanticProperties.Description="Welcome to dot net Multi platform App U I"/>
 
-            <Entry x:Name="usernameField"
+        <VerticalStackLayout Padding="25,0"
+                             Spacing="25">
+            
+        <Entry x:Name="usernameField"
                    IsSpellCheckEnabled="False"
                    Placeholder="John Doe"/>
-            <Entry x:Name="passwordField"
+        <Entry x:Name="passwordField"
                    IsPassword="True"
                    Placeholder="Password123"/>
 
-            <Button
+        <Button
                 x:Name="LoginBtn"
                 Text="Login"
                 SemanticProperties.Hint="Logs in"
                 Clicked="OnLoginClicked"/>
         </VerticalStackLayout>
-    </ScrollView>
+    </VerticalStackLayout>
 
 </ContentPage>
