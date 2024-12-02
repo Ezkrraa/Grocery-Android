@@ -3,22 +3,20 @@ using GroceryAndroid.Networking;
 
 namespace GroceryAndroid
 {
-    public partial class MainPage : ContentPage
+    public partial class LoginPage : ContentPage
     {
-
-        public MainPage()
+        public LoginPage()
         {
             Loaded += async (s, e) =>
             {
                 AuthController auth = new AuthController();
                 bool result = await auth.CheckToken();
                 if (result)
-                    await Navigation.PushAsync(new Home());
+                    await Navigation.PushAsync(new MakeListPage());
             };
             BindingContext = new Components.SelectionItem();
             InitializeComponent();
         }
-
 
         public async void OnLoginClicked(object sender, EventArgs e)
         {
@@ -26,16 +24,19 @@ namespace GroceryAndroid
             if (usernameField.Text == "override" && passwordField.Text == "Password_123?")
             {
                 ShowToast("Welcome aboard, captain!");
-                await Navigation.PushAsync(new Home());
+                await Navigation.PushAsync(new MakeListPage());
             }
             else
             {
                 AuthController auth = new();
-                HttpResult loginResult = await auth.AttemptLogin(usernameField.Text, passwordField.Text);
+                HttpResult loginResult = await auth.AttemptLogin(
+                    usernameField.Text,
+                    passwordField.Text
+                );
                 switch (loginResult)
                 {
                     case HttpResult.Success:
-                        await Navigation.PushAsync(new Home());
+                        await Navigation.PushAsync(new MakeListPage());
                         break;
                     case HttpResult.ConnectionError:
                         ShowToast("Failed to connect to server");

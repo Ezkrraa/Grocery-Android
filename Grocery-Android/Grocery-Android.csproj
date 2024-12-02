@@ -69,13 +69,19 @@
 	  <Compile Update="Components\QuantityCard.xaml.cs">
 	    <DependentUpon>QuantityCard.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="LoginPage.xaml.cs">
+	    <DependentUpon>LoginPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="MakeListPage.xaml.cs">
+	    <DependentUpon>MakeListPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
 	  <MauiXaml Update="Components\QuantityCard.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Home.xaml">
+	  <MauiXaml Update="MakeListPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Components\SelectionItem.xaml">

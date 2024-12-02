@@ -1,17 +1,18 @@
-﻿using GroceryAndroid.Models;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using GroceryAndroid.Models;
+using Newtonsoft.Json;
 
 namespace GroceryAndroid.Networking
 {
     public class GroceryListController
     {
         public string BaseUrl = "https://192.168.1.111:7020";
+
         public GroceryListController() { }
 
         public async Task<CategoryListDTO?> GetItemsInCategory(Guid CategoryId)
@@ -25,7 +26,9 @@ namespace GroceryAndroid.Networking
                 HttpResponseMessage result = await client.GetAsync(url);
                 if (result.IsSuccessStatusCode)
                 {
-                    return JsonConvert.DeserializeObject<CategoryListDTO>(await result.Content.ReadAsStringAsync());
+                    return JsonConvert.DeserializeObject<CategoryListDTO>(
+                        await result.Content.ReadAsStringAsync()
+                    );
                 }
                 return null;
             }
@@ -45,7 +48,9 @@ namespace GroceryAndroid.Networking
                 HttpResponseMessage result = await client.GetAsync(BaseUrl + "/api/category/all");
                 if (result.IsSuccessStatusCode)
                 {
-                    return JsonConvert.DeserializeObject<IEnumerable<CategoryDisplayDTO>>(await result.Content.ReadAsStringAsync());
+                    return JsonConvert.DeserializeObject<IEnumerable<CategoryDisplayDTO>>(
+                        await result.Content.ReadAsStringAsync()
+                    );
                 }
                 return null;
             }
@@ -58,13 +63,17 @@ namespace GroceryAndroid.Networking
         private static async Task<HttpClient?> GetClient()
         {
             HttpClientHandler handler = new HttpClientHandler();
-            handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+            handler.ServerCertificateCustomValidationCallback =
+                HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
             HttpClient client = new HttpClient(handler);
             client.Timeout = TimeSpan.FromSeconds(10);
             string? token = await AuthController.GetToken();
             if (token == null)
                 return null;
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                "Bearer",
+                token
+            );
             return client;
         }
     }

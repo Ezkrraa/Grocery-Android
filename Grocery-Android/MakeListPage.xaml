@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:GroceryAndroid.Components"
+             x:Class="GroceryAndroid.MakeListPage"
+             Title="Grocery List View">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False"
+                            IsEnabled="False"/>
+    </Shell.BackButtonBehavior>
+    <VerticalStackLayout>
+        <Label Text="Welcome to .NET MAUI!"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"/>
+        <ListView ItemsSource="{Binding Items}"
+                  RowHeight="80"
+                  SelectionMode="None">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell Height="100">
+                        <HorizontalStackLayout HeightRequest="50"
+                                               Margin="15"
+                                               Padding="5,0">
+                            <Button x:Name="decrementBtn"
+                                    IsVisible="{Binding Quantity}"
+                                    Clicked="decrementBtn_Clicked"
+                                    Text="-"
+                                    Margin="0"
+                                    WidthRequest="50"
+                                    HeightRequest="50"
+                                    VerticalOptions="Center"
+                                    FontSize="Large"
+                                    BackgroundColor="#DF3636"
+                                    FontAttributes="Bold"/>
+                            <Label x:Name="quantityField"
+                                   Text="{Binding Quantity}"
+                                   VerticalOptions="Fill"
+                                   FontSize="Large"
+                                   VerticalTextAlignment="Center"
+                                   FontAttributes="Bold"
+                                   MinimumWidthRequest="45"
+                                   Margin="10,0"
+                                   Padding="5,0"/>
+                            <Button x:Name="incrementBtn"
+                                    Clicked="incrementBtn_Clicked"
+                                    Text="+"
+                                    Margin="0"
+                                    WidthRequest="50"
+                                    BackgroundColor="#4BA62F"
+                                    HeightRequest="50"
+                                    VerticalOptions="Center"
+                                    FontSize="Large"
+                                    FontAttributes="Bold"/>
+                            <Label x:Name="itemName"
+                                   Padding="20,10,20,10"
+                                   FontSize="Header"
+                                   VerticalTextAlignment="Center"
+                                   Text="{Binding Name}"/>
+                        </HorizontalStackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Label IsVisible="{Binding Items.Count}"
+               Text="No items available."/>
+    </VerticalStackLayout>
+</ContentPage>

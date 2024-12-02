@@ -1,5 +1,4 @@
-﻿using Microsoft.Maui.Controls.PlatformConfiguration;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
@@ -7,6 +6,7 @@ using System.Net.Http.Json;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Maui.Controls.PlatformConfiguration;
 
 namespace GroceryAndroid.Networking
 {
@@ -14,25 +14,33 @@ namespace GroceryAndroid.Networking
     {
         Success,
         ConnectionError,
-        AuthError
+        AuthError,
     }
-
 
     public class AuthController
     {
         private const string JwtStorageKey = "jwt_token";
 
         const string BaseUrl = "https://192.168.1.111:7020";
+
         public AuthController() { }
 
         public async Task<HttpResult> AttemptLogin(string username, string password)
         {
             HttpClientHandler handler = new HttpClientHandler();
-            handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+            handler.ServerCertificateCustomValidationCallback =
+                HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
             HttpClient client = new HttpClient(handler);
             client.Timeout = TimeSpan.FromSeconds(6);
 
-            JsonContent content = JsonContent.Create(new Dictionary<string, string> { { "username", username }, { "password", password } }, new MediaTypeHeaderValue("application/json"));
+            JsonContent content = JsonContent.Create(
+                new Dictionary<string, string>
+                {
+                    { "username", username },
+                    { "password", password },
+                },
+                new MediaTypeHeaderValue("application/json")
+            );
             try
             {
                 string url = BaseUrl + "/api/auth/login";
@@ -65,12 +73,19 @@ namespace GroceryAndroid.Networking
             if (token == null)
                 return false;
             HttpClientHandler handler = new HttpClientHandler();
-            handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+            handler.ServerCertificateCustomValidationCallback =
+                HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
             HttpClient client = new HttpClient(handler);
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                "Bearer",
+                token
+            );
             try
             {
-                HttpResponseMessage result = await client.PostAsync(BaseUrl + "/api/auth/check-token", null);
+                HttpResponseMessage result = await client.PostAsync(
+                    BaseUrl + "/api/auth/check-token",
+                    null
+                );
 
                 handler.Dispose();
                 client.Dispose();
@@ -105,6 +120,7 @@ namespace GroceryAndroid.Networking
                 return;
             }
         }
+
         public static void ClearToken()
         {
             SecureStorage.Remove(JwtStorageKey);

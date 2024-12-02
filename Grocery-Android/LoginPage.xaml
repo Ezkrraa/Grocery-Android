@@ -1,38 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GroceryAndroid.MainPage">
+             x:Class="GroceryAndroid.LoginPage">
     <Shell.BackButtonBehavior>
-        <BackButtonBehavior IsVisible="False" IsEnabled="False" />
+        <BackButtonBehavior IsVisible="False"
+                            IsEnabled="False"/>
     </Shell.BackButtonBehavior>
-    <ScrollView>
+    <ScrollView Padding="50,0,50,0">
         <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
-            <!--
-            <Image
-                Source="dotnet_bot.png"
-                HeightRequest="185"
-                Aspect="AspectFit"
-                SemanticProperties.Description="dot net bot in a race car number eight" /> -->
-
             <Label
                 Text="Hello, World!"
                 Style="{StaticResource Headline}"
-                SemanticProperties.HeadingLevel="Level1" />
+                SemanticProperties.HeadingLevel="Level1"/>
 
             <Label
                 Text="Welcome to &#10;.NET Multi-platform App UI"
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
+                SemanticProperties.Description="Welcome to dot net Multi platform App U I"/>
 
-            <Entry x:Name="usernameField" IsSpellCheckEnabled="False" Placeholder="John Doe"/>
-            <Entry x:Name="passwordField"  IsPassword="True" Placeholder="Password123"/>
+            <Entry x:Name="usernameField"
+                   IsSpellCheckEnabled="False"
+                   Placeholder="John Doe"/>
+            <Entry x:Name="passwordField"
+                   IsPassword="True"
+                   Placeholder="Password123"/>
 
             <Button
                 x:Name="LoginBtn"
-                Text="Login" 
+                Text="Login"
                 SemanticProperties.Hint="Logs in"
                 Clicked="OnLoginClicked"/>
         </VerticalStackLayout>
